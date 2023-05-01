@@ -29,20 +29,8 @@ module.exports = {
             email: email
           }
         })
-        // const isPasswordValid = await user.validPassword(password)
-        // if(!isPasswordValid) {
-        //   return res.status(401).json({
-        //     error: 'The login information was incorrect'
-        //   });
-        // } 
-        // const userJson = user.toJSON()
-        // return res.status(200).json({
-        //   user: userJson,
-        //   token: jwtSignUser(userJson)
-        // }); 
       .then(async function (user) {
         if (!user) {
-          // res.redirect('/login')
           return res.status(403).send({
             error: 'The login information was incorrect'
           })
