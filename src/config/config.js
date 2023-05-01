@@ -10,12 +10,6 @@ module.exports = {
       dialect: process.env.DIALECT || 'sqlite',
       host: process.env.HOST || 'localhost',
       storage: path.resolve(__dirname, '../../poprev-db.sqlite')
-      // pool: {
-      //   max: 5,
-      //   min: 0,
-      //   acquire: 30000,
-      //   idle: 10000
-      // }
     }
   },
   authentication: {
