@@ -5,20 +5,20 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     description: DataTypes.STRING,
-    artist_id: DataTypes.INTEGER,
-    approval_status: {
+    artistId: DataTypes.INTEGER,
+    approvalStatus: {
       type: DataTypes.STRING,
       default: "DECLINED"
     },
-    contributors_count: {
+    contributorsCount: {
       type: DataTypes.INTEGER,
       default: 0
     },
-    amount_generated: {
+    amountGenerated: {
       type: DataTypes.DOUBLE,
       default: 0
     },
-    investment_status: {
+    investmentStatus: {
       type: DataTypes.INTEGER,
       default: 0
     },

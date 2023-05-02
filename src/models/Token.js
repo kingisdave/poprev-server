@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
       allowNull: false
     },
-    project_id: {
+    projectId: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
@@ -20,15 +20,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       default: "NULL"
     },
-    token_value: {
+    tokenValue: {
       type: DataTypes.DOUBLE,
       default: 0
     },
-    amount_acquired: {
+    amountAcquired: {
       type: DataTypes.DOUBLE,
       default: 0
     },
-    percent_acquired: {
+    percentAcquired: {
       type: DataTypes.DOUBLE,
       default: 0
     },

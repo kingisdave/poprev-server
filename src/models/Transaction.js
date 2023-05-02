@@ -6,11 +6,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     description: DataTypes.STRING,
-    user_id: {
+    userId: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    token_id: {
+    tokenId: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DOUBLE,
       allowNull: false
     },
-    transaction_type: {
+    transactionType: {
       type: DataTypes.STRING,
       allowNull: true
     },
