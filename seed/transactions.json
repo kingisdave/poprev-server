@@ -1,0 +1,33 @@
+[
+  {
+    "name": "Investment One",
+    "description": "This the first Investment",
+    "userId": 2,
+    "tokenId": 1,
+    "password": "1234567890",
+    "amount": 20,
+    "transactionType": "CARD",
+    "status": "SUCCESS",
+    "totalAmount": 9000000 
+  },
+  {
+    "name": "Investment One",
+    "description": "This the first Investment",
+    "userId": 1,
+    "tokenId": 2,
+    "amount": 40,
+    "transactionType": "CARD",
+    "status": "FAILED",
+    "totalAmount": 1000000 
+  },
+  {
+    "name": "Investment Two",
+    "description": "This the second Investment",
+    "userId": 2,
+    "tokenId": 2,
+    "amount": 190,
+    "transactionType": "CARD",
+    "status": "PROCESSING",
+    "totalAmount": 8000000 
+  }
+]

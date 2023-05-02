@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     description: DataTypes.STRING,
-    token: {
+    maintoken: {
       type: DataTypes.TEXT,
       unique: true,
       allowNull: false

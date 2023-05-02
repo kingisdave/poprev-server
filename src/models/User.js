@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       unique: true
     },
-    totalInvestment: {
+    investmentCount: {
       type: DataTypes.INTEGER,
       default: 0
     },

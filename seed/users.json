@@ -1,14 +1,23 @@
 [
   {
-    "firstName": "first",
-    "lastName": "test",
+    "name": "first tester",
     "email": "first@gmail.com",
-    "password": "1234567890" 
+    "password": "1234567890",
+    "investmentCount": 20,
+    "totalAmount": 3000000 
   },
   {
-    "firstName": "second",
-    "lastName": "test",
+    "name": "second tester",
     "email": "second@gmail.com",
-    "password": "1234567890" 
+    "password": "1234567890", 
+    "investmentCount": 10,
+    "totalAmount": 8200000
+  },
+  {
+    "name": "third tester",
+    "email": "third@gmail.com",
+    "password": "1234567890", 
+    "investmentCount": 5,
+    "totalAmount": 1000000
   }
 ]

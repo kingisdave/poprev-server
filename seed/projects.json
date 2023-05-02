@@ -1,0 +1,29 @@
+[
+  {
+    "name": "Project One",
+    "description": "This the first project",
+    "artistId": 1,
+    "approvalStatus": "SUCCESS",
+    "contributorsCount": 10,
+    "amountGenerated": 700000.00,
+    "investmentStatus": 90
+  },
+  {
+    "name": "Project Two",
+    "description": "This the second project",
+    "artistId": 3,
+    "approvalStatus": "SUCCESS",
+    "contributorsCount": 7,
+    "amountGenerated": 10000000.00,
+    "investmentStatus": 60
+  },
+  {
+    "name": "Project Three",
+    "description": "This the third project",
+    "artistId": 2,
+    "approvalStatus": "SUCCESS",
+    "contributorsCount": 4,
+    "amountGenerated": 60000000.00,
+    "investmentStatus": 100
+  }
+]
