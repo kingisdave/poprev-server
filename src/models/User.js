@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     totalAmount: {
       type: DataTypes.DOUBLE,
-      default: 0.00
+      default: 0
     },
     password: DataTypes.STRING  
   },{

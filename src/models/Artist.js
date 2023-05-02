@@ -1,7 +1,5 @@
-const bcrypt = require('bcrypt')
-
 module.exports = (sequelize, DataTypes) => {
-  const Artist = sequelize.define('User', {
+  const Artist = sequelize.define('Artist', {
     name: {
       type: DataTypes.STRING,
       allowNull: false
@@ -17,16 +15,13 @@ module.exports = (sequelize, DataTypes) => {
     projectCount: {
       type: DataTypes.INTEGER,
       default: 0
-    },
-    totalAmount: {
-      type: DataTypes.INTEGER,
-      default: 0
     }
   },{
     associate: function (models) {
       Artist.belongsTo(models.User, {
         onDelete: 'CASCADE',
       });
+      Artist.hasMany(models.Project);
     }
   });
   
