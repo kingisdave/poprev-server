@@ -9,7 +9,8 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING,
     token: {
       type: DataTypes.TEXT,
-      unique: true
+      unique: true,
+      allowNull: false
     },
     project_id: {
       type: DataTypes.INTEGER,
@@ -33,7 +34,11 @@ module.exports = (sequelize, DataTypes) => {
     },
   },{
     associate: function (models) {
-      Token.hasOne(models.Project, {
+      Token.belongsTo(models.Project, {
+        onDelete: 'CASCADE',
+        hooks: true
+      });
+      Token.hasMany(models.Transaction, {
         onDelete: 'CASCADE',
         hooks: true
       });

@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     associate: function (models) {
       Artist.belongsTo(models.User, {
         onDelete: 'CASCADE',
+        constraints: false
       });
       Artist.hasMany(models.Project);
     }

@@ -27,6 +27,9 @@ module.exports = (sequelize, DataTypes) => {
       Project.belongsTo(models.Artist, {
         onDelete: 'CASCADE'
       });
+      Project.hasMany(models.Token, {
+        onDelete: 'CASCADE'
+      });
     }
   });
   

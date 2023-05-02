@@ -1,9 +1,6 @@
-// const bcrypt = require('bcrypt')
-
-const { Transaction } = require("sequelize/types");
 
 module.exports = (sequelize, DataTypes) => {
-  const Token = sequelize.define('Token', {
+  const Transaction = sequelize.define('Transaction', {
     name: {
       type: DataTypes.STRING,
       allowNull: false
@@ -31,7 +28,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   },{
     associate: function (models) {
-      Transaction.hasOne(models.Project, {
+      Transaction.belongsTo(models.User, {
+        onDelete: 'CASCADE',
+        hooks: true
+      });
+      Transaction.belongsTo(models.Token, {
         onDelete: 'CASCADE',
         hooks: true
       });

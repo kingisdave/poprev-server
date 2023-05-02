@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING  
   },{
     associate: function (models) {
-      User.hasOne(models.Bookmark, {
+      User.hasOne(models.Artist, {
         onDelete: 'CASCADE',
         hooks: true
       });
