@@ -19,8 +19,8 @@ module.exports = (sequelize, DataTypes) => {
       default: 0
     },
     investmentStatus: {
-      type: DataTypes.INTEGER,
-      default: 0
+      type: DataTypes.STRING,
+      default: "OPEN"
     },
   },{
     associate: function (models) {
