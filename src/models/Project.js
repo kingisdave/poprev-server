@@ -1,26 +1,43 @@
+const { doubledUuid } = require('../utils/commonUuids')
+
 module.exports = (sequelize, DataTypes) => {
   const Project = sequelize.define('Project', {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: doubledUuid,
+      primaryKey: true,
+      unique: true
+    },
     name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    description: {
+      type: DataTypes.STRING
+    },
+    artistId:  {
       type: DataTypes.STRING,
       allowNull: false
     },
-    description: DataTypes.STRING,
-    artistId: DataTypes.INTEGER,
+    projectValue: {
+      type: DataTypes.STRING,
+      defaultValue: "0.00"
+    },
     approvalStatus: {
       type: DataTypes.STRING,
-      default: "DECLINED"
+      defaultValue: "DECLINED"
     },
     contributorsCount: {
       type: DataTypes.INTEGER,
-      default: 0
+      defaultValue: 0
     },
     amountGenerated: {
       type: DataTypes.DOUBLE,
-      default: 0
+      defaultValue: 0
     },
     investmentStatus: {
       type: DataTypes.STRING,
-      default: "OPEN"
+      defaultValue: "CLOSED"
     },
   },{
     associate: function (models) {

@@ -1,7 +1,14 @@
-// const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt')
+const { doubledUuid, generateToken } = require('../utils/commonUuids')
 
 module.exports = (sequelize, DataTypes) => {
   const Token = sequelize.define('Token', {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: doubledUuid,
+      primaryKey: true,
+      unique: true
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false
@@ -9,28 +16,28 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING,
     maintoken: {
       type: DataTypes.TEXT,
-      unique: true,
+      defaultValue: generateToken,
       allowNull: false
     },
     projectId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false
     },
     status: {
       type: DataTypes.STRING,
-      default: "NULL"
+      defaultValue: "NULL"
     },
     tokenValue: {
-      type: DataTypes.DOUBLE,
-      default: 0
+      type: DataTypes.STRING,
+      defaultValue: "0.00"
     },
     amountAcquired: {
-      type: DataTypes.DOUBLE,
-      default: 0
+      type: DataTypes.STRING,
+      defaultValue: "0.00"
     },
     percentAcquired: {
-      type: DataTypes.DOUBLE,
-      default: 0
+      type: DataTypes.STRING,
+      defaultValue: "0.00"
     },
   },{
     associate: function (models) {
@@ -44,24 +51,37 @@ module.exports = (sequelize, DataTypes) => {
       });
     },
     hooks: {
-      // beforeCreate: async (user) => {
-      //   if (user.password) {
-      //     const salt = await bcrypt.genSalt(10);
-      //     user.password = await bcrypt.hash(user.password, salt);
-      //   }
-      // },
-      // beforeUpdate:async (user) => {
-      //   if (user.password) {
-      //     const salt = await bcrypt.genSalt(10);
-      //     user.password = await bcrypt.hash(user.password, salt);
-      //   }
-      // }
+      beforeCreate: async (token) => {
+        if (token.maintoken) {
+          const salt = await bcrypt.genSalt(10);
+          token.maintoken = await bcrypt.hash(token.maintoken, salt);
+        }
+      },
+      beforeUpdate:async (token) => {
+        if (token.maintoken) {
+          const salt = await bcrypt.genSalt(10);
+          token.maintoken = await bcrypt.hash(token.maintoken, salt);
+        }
+      }
     }
   });
   
-  // Token.prototype.validPassword = async function (password) {
-  //   return await bcrypt.compare(password, this.password);
-  // };
+  Token.prototype.validToken = async function (token) {
+    return await bcrypt.compare(token, this.maintoken);
+  };
+
+  Token.prototype.updateAndCalculateTotal = async function (payment) {
+    // Perform calculations
+    const total = parseFloat(this.tokenValue) - parseInt(payment);
+
+    // Update the instance properties
+    this.amountAcquired = total.toFixed(2);
+    this.percentAcquired = ((total / parseFloat(this.tokenValue)) * 100).toFixed(2);
+    this.payment = payment;
+
+    // Save the updated instance
+    return this.save();
+  }
   
   return Token;
 }

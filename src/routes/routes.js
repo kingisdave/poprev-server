@@ -19,6 +19,7 @@ module.exports = (app) => {
   app.get('/users/:userId',
     UsersController.show)  // Display only one user
   app.put('/users/:userId',
+    isAuthenticated,
     UsersController.update)  // update user profile
   
   // Artists routes to get, post, update and to delete/remove 
@@ -28,31 +29,56 @@ module.exports = (app) => {
     AuthenticationControllerPolicy.artist,
     isAuthenticated,
     ArtistsController.post)   // Add new artist
-    app.get('/artists/:artistId',
-    ArtistsController.show)
+  app.get('/artists/:artistId',
+    ArtistsController.show)  // Display one artist details
   app.put('/artists/:artistId',
-    ArtistsController.update)
+    isAuthenticated,
+    ArtistsController.update)  // Updated artist stageName
   app.delete('/artists/:artistId',
-    ArtistsController.delete)
+    ArtistsController.delete)  // Remove artist detail
   
   // Projects routes to get, post, update and to delete/remove
   app.get('/projects',
-    ProjectsController.index)
-  app.post('/projects',
-    ProjectsController.post)
+    ProjectsController.index)   // Display all activated projects
+  app.post('/projects/:artistId',
+    isAuthenticated,
+    ProjectsController.post)   // Create new project for artist
   app.get('/projects/:projectId',
-    ProjectsController.show)
+    ProjectsController.show)   // Display a project
   app.put('/projects/:projectId',
-    ProjectsController.update)
+    isAuthenticated,
+    ProjectsController.update)   // Update a project
+  app.delete('/projects/:projectId',
+    isAuthenticated,
+    ProjectsController.delete)  // Delete a project
   
   // Tokens routes to get, post, update and to delete/remove
   app.get('/tokens',
+    isAuthenticated,
     TokensController.index)
-  app.post('/tokens',
+  app.post('/tokens/:projectId',
+    isAuthenticated,
+    TokensController.post)  // Create a token for the project
+  app.get('/tokens/:tokenId',
+    TokensController.show)   // Get the token details
+  app.put('/tokens/:tokenId',
+    isAuthenticated,
+    TokensController.buyToken)  // Buy the token
+  app.delete('/tokens/:tokenId', 
+    isAuthenticated,
+    TokensController.delete)
+
+  // Transactions routes to get and to delete/remove
+  app.get('/tokens',
+    isAuthenticated,
+    TokensController.index)
+  app.post('/tokens/:projectId',
+    isAuthenticated,
     TokensController.post)
   app.get('/tokens/:tokenId',
     TokensController.show)
-  app.put('/tokens/:tokenId',
-    TokensController.update)
+  app.delete('/tokens/:tokenId',
+    isAuthenticated,
+    TokensController.delete)
   
 }

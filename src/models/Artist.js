@@ -1,4 +1,4 @@
-const { shortenedUuid } = require('../utils/common')
+const { shortenedUuid } = require('../utils/commonUuids')
 
 module.exports = (sequelize, DataTypes) => {
   const Artist = sequelize.define('Artist', {

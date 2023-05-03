@@ -1,4 +1,4 @@
-const { Token } = require('../models')
+const { Token, Project, Transaction } = require('../models')
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
@@ -6,7 +6,6 @@ module.exports = {
   async index (req, res) {
     try {
       let tokens = null
-      // const search = 'Wade in the Water.'
       const search = req.query.search
       if(search) {
         tokens = await Token.findAll({
@@ -18,10 +17,6 @@ module.exports = {
                 [Op.like]: `%${search}%`
               }
             }))
-            // [Op.or]: [
-            //   {title: { [Op.like]: '%' + search + '%' }},
-            //   {artist: { [Op.like]: '%' + search + '%' }}
-            // ]
           }
         })
       } else {
@@ -35,10 +30,21 @@ module.exports = {
         error: 'Error occurred while trying to fetch the tokens'
       })
     }
-  },
+  }, 
   async post (req, res) {
     try {
-      const tokens = await Token.create(req.body)
+      const projectId = req.params.projectId;
+      const project = await Project.findByPk(projectId)
+      if(!project) {
+        res.status(400).send({
+          error: 'Project not found while creating a new token'
+        })  
+      }
+      const tokenData = {
+        projectId,
+        ...req.body
+      };
+      const tokens = await Token.create(tokenData)
       res.send(tokens)
     } catch (error) {
       res.status(400).send({
@@ -56,17 +62,50 @@ module.exports = {
       })
     }
   },
-  async update (req, res) {
+  async buyToken (req, res) {
     try {
-      await Token.update(req.body, {
-        where: {
-          id: req.params.tokenId
-        }
-      })
+      
+      const token = await Token.findByPk(req.params.tokenId);
+      // const transactionData = {
+      //   userId: req.user.id,
+      //   tokenId: req.params.tokenId,
+      //   name: req.body.name,
+      //   description: req.body.description,
+      //   amount: req.body.amount,
+      //   transactionType: req.body.transactionType,
+      // }
+      if (!token) {
+        return res.status(404).send({
+          error: 'Token not found'
+        });
+      }
+      await token.update({status: "PROCESSING"})
+      await token.updateAndCalculateTotal(req.body.amount);
+      const transaction = await Transaction.create(req.body);
+      if (!transaction) {
+        return res.status(404).send({
+          error: 'You are not able to acquire this token'
+        });
+      }
       res.send(req.body)
     } catch (error) {
       res.status(400).send({
         error: 'Error occurred while updating the token'
+      })
+    }
+  },
+  async delete (req, res) {
+    try {
+      const {tokenId} = req.params
+      const token = await Token.destroy({
+        where: {
+          id: tokenId 
+        }
+      });
+      res.send(token)
+    } catch (error) {
+      res.status(400).send({
+        error: 'Error occurred while deleting token'
       })
     }
   }

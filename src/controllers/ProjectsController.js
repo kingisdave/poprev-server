@@ -1,4 +1,4 @@
-const { Project } = require('../models')
+const { Project, Artist } = require('../models')
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
@@ -6,13 +6,12 @@ module.exports = {
   async index (req, res) {
     try {
       let projects = null
-      // const search = 'Wade in the Water.'
-      const search = req.query.search
+      const search = req.query.search // You can search for projects
       if(search) {
         projects = await Project.findAll({
           where: {
             [Op.or]: [
-              'title','artist','genre','album'
+              'name','description','approvalStatus','investmentStatus'
             ].map(key => ({
               [key]: {
                 [Op.like]: `%${search}%`
@@ -32,10 +31,23 @@ module.exports = {
       })
     }
   },
+  //To create a project, you must add the artist to it 
   async post (req, res) {
     try {
-      const projects = await Project.create(req.body)
-      res.send(projects)
+      const artistId = req.params.artistId;
+      const artist = await Artist.findByPk(artistId)
+      if(!artist) {
+        res.status(400).send({
+          error: 'Artist not found while creating a new project'
+        })  
+      }
+      const projectData = {
+        artistId,
+        ...req.body,
+      };
+  
+      const project = await Project.create(projectData);
+      res.send(project)
     } catch (error) {
       res.status(400).send({
         error: 'Error while trying to add a new project'
@@ -54,15 +66,37 @@ module.exports = {
   },
   async update (req, res) {
     try {
-      await Project.update(req.body, {
+      // const projectId = req.params.projectId;
+      let investmentStatus = (req.body.approvedStatus == "APPROVED")? "OPENED" : "CLOSED";
+
+      const projectData = {
+        investmentStatus,
+        ...req.body,
+      };
+      const project = await Project.update(projectData, {
         where: {
           id: req.params.projectId
         }
       })
-      res.send(req.body)
+      res.send(project)
     } catch (error) {
       res.status(400).send({
         error: 'Error occurred while updating project'
+      })
+    }
+  },
+  async delete (req, res) {
+    try {
+      const {projectId} = req.params
+      const project = await Project.destroy({
+        where: {
+          id: projectId 
+        }
+      });
+      res.send(project)
+    } catch (error) {
+      res.status(400).send({
+        error: 'Error occurred while deleting project'
       })
     }
   }
