@@ -1,5 +1,12 @@
+const { shortenedUuid } = require('../utils/common')
+
 module.exports = (sequelize, DataTypes) => {
   const Artist = sequelize.define('Artist', {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: shortenedUuid,
+      primaryKey: true
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false
@@ -10,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     stageName: {
       type: DataTypes.STRING,
+      allowNull: false,
       unique: true
     },
     projectCount: {

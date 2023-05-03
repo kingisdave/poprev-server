@@ -23,7 +23,8 @@
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
     "sequelize": "^6.21.3",
-    "sqlite3": "^5.0.10"
+    "sqlite3": "^5.0.10",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "eslint": "^8.19.0",

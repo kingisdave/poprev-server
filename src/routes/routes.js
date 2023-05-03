@@ -4,7 +4,7 @@ const ArtistsController = require('../controllers/ArtistsController')
 const ProjectsController = require('../controllers/ProjectsController')
 const TokensController = require('../controllers/TokensController')
 const UsersController = require('../controllers/UsersController')
-// const isAuthenticated = require('../policies/isAuthenticated')
+const isAuthenticated = require('../policies/isAuthenticated')
 
 module.exports = (app) => {
   app.post('/register',
@@ -25,9 +25,10 @@ module.exports = (app) => {
   app.get('/artists',
     ArtistsController.index)  // To display all available artists
   app.post('/artists',
-    // isAuthenticated,
+    AuthenticationControllerPolicy.artist,
+    isAuthenticated,
     ArtistsController.post)   // Add new artist
-  app.get('/artists/:artistId',
+    app.get('/artists/:artistId',
     ArtistsController.show)
   app.put('/artists/:artistId',
     ArtistsController.update)

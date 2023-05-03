@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt')
+const { shortenedUuid } = require('../utils/common')
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {

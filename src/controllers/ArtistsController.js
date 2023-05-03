@@ -34,9 +34,22 @@ module.exports = {
   },
   async post (req, res) {
     try {
-      console.log("BODY ",req.body.id)
+      const userId = req.user.id;
+      const name = req.user.name;
+      if(!userId && !name) {
+        return res.status(400).send({
+          error: 'Error fetching user'
+        })
+      }
+      
+      const artists = await Artist.create({
+        name: name,
+        userId: userId,
+        stageName: req.body.stageName,
+      })
       // const artists = await Artist.create(req.body)
-      // res.send(artists)
+      res.send(artists)
+
     } catch (error) {
       res.status(400).send({
         error: 'Error while trying to add a new artist'
