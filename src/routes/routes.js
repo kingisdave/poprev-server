@@ -69,16 +69,13 @@ module.exports = (app) => {
     TokensController.delete)
 
   // Transactions routes to get and to delete/remove
-  app.get('/tokens',
+  app.get('/transactions',
     isAuthenticated,
-    TokensController.index)
-  app.post('/tokens/:projectId',
+    TransactionsController.index)
+  app.get('/transactions/:tokenId',
+    TransactionsController.show)
+  app.delete('/transactions/:tokenId',
     isAuthenticated,
-    TokensController.post)
-  app.get('/tokens/:tokenId',
-    TokensController.show)
-  app.delete('/tokens/:tokenId',
-    isAuthenticated,
-    TokensController.delete)
+    TransactionsController.delete)
   
 }

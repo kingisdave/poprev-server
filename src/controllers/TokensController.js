@@ -66,14 +66,11 @@ module.exports = {
     try {
       
       const token = await Token.findByPk(req.params.tokenId);
-      // const transactionData = {
-      //   userId: req.user.id,
-      //   tokenId: req.params.tokenId,
-      //   name: req.body.name,
-      //   description: req.body.description,
-      //   amount: req.body.amount,
-      //   transactionType: req.body.transactionType,
-      // }
+      const transactionData = {
+        userId: req.user.id,
+        tokenId: req.params.tokenId,
+        ...req.body
+      }
       if (!token) {
         return res.status(404).send({
           error: 'Token not found'
@@ -81,7 +78,7 @@ module.exports = {
       }
       await token.update({status: "PROCESSING"})
       await token.updateAndCalculateTotal(req.body.amount);
-      const transaction = await Transaction.create(req.body);
+      const transaction = await Transaction.create(transactionData);
       if (!transaction) {
         return res.status(404).send({
           error: 'You are not able to acquire this token'
