@@ -1,10 +1,9 @@
 const AuthenticationController = require('../controllers/AuthenticationController')
 const AuthenticationControllerPolicy = require('../policies/AuthenticationControllerPolicy')
-const SongsController = require('../controllers/SongsController')
-const BookmarksController = require('../controllers/BookmarksController')
 const ArtistsController = require('../controllers/ArtistsController')
 const ProjectsController = require('../controllers/ProjectsController')
 const TokensController = require('../controllers/TokensController')
+const UsersController = require('../controllers/UsersController')
 
 module.exports = (app) => {
   app.post('/register',
@@ -13,15 +12,28 @@ module.exports = (app) => {
   app.post('/login',
     AuthenticationController.login)
   
+  // Users routes to get, update and to delete/remove 
+  app.get('/users',
+    UsersController.index)  // To display the authenticated users
+  app.get('/users/:userId',
+    UsersController.show)  // Display only one user
+  app.put('/users/:userId',
+    UsersController.update)  // update user profile
+  
+  // Artists routes to get, post, update and to delete/remove 
   app.get('/artists',
-    ArtistsController.index)
+    ArtistsController.index)  // To display all available artists
   app.post('/artists',
-    ArtistsController.post)
+    // isAuthenticated
+    ArtistsController.post)   // Add new artist
   app.get('/artists/:artistId',
     ArtistsController.show)
   app.put('/artists/:artistId',
     ArtistsController.update)
+  app.delete('/artists/:artistId',
+    ArtistsController.delete)
   
+  // Projects routes to get, post, update and to delete/remove
   app.get('/projects',
     ProjectsController.index)
   app.post('/projects',
@@ -31,6 +43,7 @@ module.exports = (app) => {
   app.put('/projects/:projectId',
     ProjectsController.update)
   
+  // Tokens routes to get, post, update and to delete/remove
   app.get('/tokens',
     TokensController.index)
   app.post('/tokens',
@@ -40,19 +53,4 @@ module.exports = (app) => {
   app.put('/tokens/:tokenId',
     TokensController.update)
   
-    app.get('/songs',
-    SongsController.index)
-  app.post('/songs',
-    SongsController.post)
-  app.get('/songs/:songId',
-    SongsController.show)
-  app.put('/songs/:songId',
-    SongsController.update)
-
-  app.get('/bookmarks',
-    BookmarksController.index)
-  app.post('/bookmarks',
-    BookmarksController.post)
-  app.delete('/bookmarks/:bookmarkId',
-    BookmarksController.delete)
 }

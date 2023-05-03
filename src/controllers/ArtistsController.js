@@ -65,5 +65,20 @@ module.exports = {
         error: 'Error occurred while updating artist'
       })
     }
+  },
+  async delete (req, res) {
+    try {
+      const {artistId} = req.params
+      const artist = await Artist.destroy({
+        where: {
+          id: artistId 
+        }
+      });
+      res.send(artist)
+    } catch (error) {
+      res.status(400).send({
+        error: 'Error occurred whilr deleting artist'
+      })
+    }
   }
 } 

@@ -4,15 +4,12 @@ module.exports = {
   register (req, res, next) {
     // creating the schema objects
     const schema = Joi.object({
-      firstName: Joi.string().regex(
-        new RegExp('^[a-zA-Z0-9]{2,12}$')
-      ),
-      lastName: Joi.string().regex(
-        new RegExp('^[a-zA-Z0-9]{2,12}$')
+      name: Joi.string().regex(
+        new RegExp('^[a-zA-Z0-9 ]{2,32}$') // validation including spaces, numbers and alphas
       ),
       email: Joi.string().email(),
       password: Joi.string().regex(
-        new RegExp('^[a-zA-Z0-9]{8,32}$')
+        new RegExp('^[a-zA-Z0-9 ]{8,32}$')
       ),
     })
 
@@ -22,19 +19,14 @@ module.exports = {
       allowUnknown: true,  //ignore unknown props
       stripUnknown: true,   // remove unknown props
     };
-
     const { error, value } = schema.validate(req.body, options);
+    console.log(error, "BODY ")
     if(error){
       // on fail return comma seperated errors
       switch (error.details[0].context.key) {
-        case 'firstName':
+        case 'name':
           res.status(400).send({
-            error: 'Must be more than 2 characters in length and less than 12'
-          })
-          break;
-        case 'lastName':
-          res.status(400).send({
-            error: 'Must be more than 2 characters in length and less than 12'
+            error: 'Must be more than 2 characters in length and less than 32'
           })
           break;
         case 'email':
@@ -59,6 +51,7 @@ module.exports = {
           break;
       }
     } else {
+      // console.log(value, "VALUE CHECKING !!!!!!!")
       req.body = value;
       next();
     }
