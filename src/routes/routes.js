@@ -5,6 +5,7 @@ const ProjectsController = require('../controllers/ProjectsController')
 const TokensController = require('../controllers/TokensController')
 const UsersController = require('../controllers/UsersController')
 const isAuthenticated = require('../policies/isAuthenticated')
+const TransactionsController = require('../controllers/TransactionsController')
 
 module.exports = (app) => {
   app.post('/register',
@@ -72,6 +73,9 @@ module.exports = (app) => {
   app.get('/transactions',
     isAuthenticated,
     TransactionsController.index)
+  app.get('/transactions/:userId',
+    isAuthenticated,
+    TransactionsController.user)
   app.get('/transactions/:tokenId',
     TransactionsController.show)
   app.delete('/transactions/:tokenId',

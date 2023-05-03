@@ -1,17 +1,17 @@
-const { Token, Project, Transaction } = require('../models')
+const { Transaction } = require('../models')
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
 module.exports = {
   async index (req, res) {
     try {
-      let tokens = null
+      let transactions = null
       const search = req.query.search
       if(search) {
-        tokens = await Token.findAll({
+        transactions = await Transaction.findAll({
           where: {
             [Op.or]: [
-              'name','description'
+              'name','description','createdAt'
             ].map(key => ({
               [key]: {
                 [Op.like]: `%${search}%`
@@ -20,39 +20,39 @@ module.exports = {
           }
         })
       } else {
-        tokens = await Token.findAll({
+        transactions = await Transaction.findAll({
           limit: 10
         })
       }
-      res.send(tokens)
+      res.send(transactions)
     } catch (error) {
       res.status(400).send({
-        error: 'Error occurred while trying to fetch the tokens'
+        error: 'Error occurred while trying to fetch the transactions'
       })
     }
   }, 
   async show (req, res) {
     try {
-      const token = await Token.findByPk(req.params.tokenId)
-      res.send(token)
+      const transaction = await Transaction.findByPk(req.params.transactionId)
+      res.send(transaction)
     } catch (error) {
       res.status(400).send({
-        error: 'Error occurred while trying to fetch the token'
+        error: 'Error occurred while trying to fetch the transaction'
       })
     }
   },
   async delete (req, res) {
     try {
-      const {tokenId} = req.params
-      const token = await Token.destroy({
+      const {transactionId} = req.params
+      const transaction = await Transaction.destroy({
         where: {
-          id: tokenId 
+          id: transactionId 
         }
       });
-      res.send(token)
+      res.send(transaction)
     } catch (error) {
       res.status(400).send({
-        error: 'Error occurred while deleting token'
+        error: 'Error occurred while deleting transaction'
       })
     }
   }
