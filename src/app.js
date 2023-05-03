@@ -11,7 +11,13 @@ app.use(cors())
 
 require('./passport')
 
-require('./routes/routes')(app)
+// require('./routes/routes')(app)
+
+// Apply the "api/" prefix to all routes
+const router = express.Router();
+app.use('/api', router);
+require('./routes/routes')(router);
+
 
 sequelize.sync()
     .then(() => {
