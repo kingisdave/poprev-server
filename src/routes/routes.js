@@ -64,7 +64,7 @@ module.exports = (app) => {
     TokensController.show)   // Get the token details
   app.put('/tokens/:tokenId',
     isAuthenticated,
-    TokensController.buyToken)  // Buy the token
+    TokensController.buyToken)  // Buy a token
   app.delete('/tokens/:tokenId', 
     isAuthenticated,
     TokensController.delete)
@@ -73,12 +73,9 @@ module.exports = (app) => {
   app.get('/transactions',
     isAuthenticated,
     TransactionsController.index)
-  app.get('/transactions/:userId',
-    isAuthenticated,
-    TransactionsController.user)
-  app.get('/transactions/:tokenId',
+  app.get('/transactions/:transactionId',
     TransactionsController.show)
-  app.delete('/transactions/:tokenId',
+  app.delete('/transactions/:transactionId',
     isAuthenticated,
     TransactionsController.delete)
   
