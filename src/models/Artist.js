@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     projectCount: {
       type: DataTypes.INTEGER,
-      default: 0
+      defaultValue: 0
     }
   },{
     associate: function (models) {

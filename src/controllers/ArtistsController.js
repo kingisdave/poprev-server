@@ -34,8 +34,9 @@ module.exports = {
   },
   async post (req, res) {
     try {
-      const artists = await Artist.create(req.body)
-      res.send(artists)
+      console.log("BODY ",req.body.id)
+      // const artists = await Artist.create(req.body)
+      // res.send(artists)
     } catch (error) {
       res.status(400).send({
         error: 'Error while trying to add a new artist'

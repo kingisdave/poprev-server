@@ -20,7 +20,6 @@ module.exports = {
       stripUnknown: true,   // remove unknown props
     };
     const { error, value } = schema.validate(req.body, options);
-    console.log(error, "BODY ")
     if(error){
       // on fail return comma seperated errors
       switch (error.details[0].context.key) {
